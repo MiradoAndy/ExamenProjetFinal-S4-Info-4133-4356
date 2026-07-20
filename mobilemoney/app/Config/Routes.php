@@ -24,3 +24,18 @@ $routes->get('operateur/baremes/delete/(:num)',  'BaremeController::delete/$1');
 // --- Opérateur : Situations ---
 $routes->get('operateur/situation/gain',    'SituationController::gain');
 $routes->get('operateur/situation/comptes', 'SituationController::comptes');
+
+// --- Côté client : Login ---
+$routes->get('/login',  'Client\AuthController::showLogin');
+$routes->post('/login', 'Client\AuthController::login');
+$routes->get('/logout', 'Client\AuthController::logout');
+
+// --- Côté client : Espace client (protégé) ---
+$routes->group('client', ['filter' => 'clientAuth'], static function (RouteCollection $routes) {
+    $routes->get('dashboard', 'Client\DashboardController::index');
+
+    $routes->get('operation/(:segment)',  'Client\OperationController::form/$1');
+    $routes->post('operation/(:segment)', 'Client\OperationController::process/$1');
+
+    $routes->get('historique', 'Client\HistoriqueController::index');
+});

@@ -6,10 +6,20 @@ use CodeIgniter\Model;
 
 class HistoriqueOperationModel extends Model
 {
-    protected $table      = 'historique_operation';
-    protected $primaryKey = 'id_operation';
-    protected $allowedFields = ['type_operation_id', 'montant', 'frais', 'client_id', 'date', 'numero_destinataire'];
-    protected $useTimestamps = false;
+    protected $table         = 'historique_operation';
+    protected $primaryKey    = 'id_operation';
+    protected $returnType    = 'array';
+    protected $allowedFields = ['type_operation_id', 'montant', 'frais', 'client_id', 'numero_destinataire'];
+
+    // La colonne `date` est remplie automatiquement à l'insertion
+    protected $useTimestamps = true;
+    protected $dateFormat    = 'datetime';
+    protected $createdField  = 'date';
+    protected $updatedField  = '';
+
+    // ---------------------------------------------------------------
+    // Côté opérateur : gains
+    // ---------------------------------------------------------------
 
     public function getTotalGains()
     {
@@ -48,6 +58,10 @@ class HistoriqueOperationModel extends Model
         ")->getResultArray();
     }
 
+    // ---------------------------------------------------------------
+    // Côté opérateur : comptes clients
+    // ---------------------------------------------------------------
+
     public function getOperationsClient($clientId)
     {
         return $this->db->query("
@@ -57,5 +71,18 @@ class HistoriqueOperationModel extends Model
             WHERE h.client_id = ?
             ORDER BY h.date DESC
         ", [$clientId])->getResultArray();
+    }
+
+    // ---------------------------------------------------------------
+    // Côté client : historique personnel
+    // ---------------------------------------------------------------
+
+    public function getHistoriqueParClient(int $idClient): array
+    {
+        return $this->select('historique_operation.*, type_operation.libelle AS type_libelle')
+            ->join('type_operation', 'type_operation.id_type_operation = historique_operation.type_operation_id')
+            ->where('historique_operation.client_id', $idClient)
+            ->orderBy('historique_operation.date', 'DESC')
+            ->findAll();
     }
 }

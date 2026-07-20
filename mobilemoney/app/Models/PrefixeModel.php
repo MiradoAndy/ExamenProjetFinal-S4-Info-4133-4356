@@ -6,8 +6,9 @@ use CodeIgniter\Model;
 
 class PrefixeModel extends Model
 {
-    protected $table      = 'prefixe';
-    protected $primaryKey = 'id_prefixe';
-    protected $allowedFields = ['valeur'];
+    protected $table         = 'prefixe';
+    protected $primaryKey    = 'id_prefixe';
+    protected $returnType    = 'array';
     protected $useTimestamps = false;
+    protected $allowedFields = ['valeur'];
 }
