@@ -96,3 +96,13 @@ php spark migrate
 
 # 2. Insérer les données initiales
 php spark db:seed DatabaseSeeder
+
+# Ouvrir la base SQLite en ligne de commande
+sqlite3 writable/mobilemoney.db
+
+# Ensuite dans le shell SQLite :
+.tables                        # liste toutes les tables
+.schema prefixe                # structure d'une table précise
+.schema                        # structure de toutes les tables
+.quit                          # quitter
+
