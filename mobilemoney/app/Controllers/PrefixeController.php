@@ -16,7 +16,8 @@ class PrefixeController extends BaseController
     public function index(): string
     {
         return view('operateur/prefixe/index', [
-            'prefixes' => $this->prefixeModel->findAll(),
+            'prefixes_internes' => $this->prefixeModel->getPrefixesInternes(),
+            'prefixes_externes' => $this->prefixeModel->getPrefixesExternes(),
         ]);
     }
 
@@ -27,7 +28,9 @@ class PrefixeController extends BaseController
 
     public function store()
     {
-        $valeur = trim((string) $this->request->getPost('valeur'));
+        $valeur     = trim((string) $this->request->getPost('valeur'));
+        $estExterne = (int) $this->request->getPost('est_externe');
+        $commission = $estExterne ? (float) $this->request->getPost('pourcentage_commission') : 0.0;
 
         if ($valeur === '') {
             return redirect()->back()->with('error', 'Le préfixe ne peut pas être vide.');
@@ -37,7 +40,11 @@ class PrefixeController extends BaseController
             return redirect()->back()->with('error', 'Ce préfixe existe déjà.');
         }
 
-        $this->prefixeModel->insert(['valeur' => $valeur]);
+        $this->prefixeModel->insert([
+            'valeur'                 => $valeur,
+            'est_externe'            => $estExterne,
+            'pourcentage_commission' => $commission,
+        ]);
 
         return redirect()->to('/operateur/prefixes')->with('success', 'Préfixe ajouté avec succès.');
     }
@@ -51,13 +58,19 @@ class PrefixeController extends BaseController
 
     public function update(int $id)
     {
-        $valeur = trim((string) $this->request->getPost('valeur'));
+        $valeur     = trim((string) $this->request->getPost('valeur'));
+        $estExterne = (int) $this->request->getPost('est_externe');
+        $commission = $estExterne ? (float) $this->request->getPost('pourcentage_commission') : 0.0;
 
         if ($valeur === '') {
             return redirect()->back()->with('error', 'Le préfixe ne peut pas être vide.');
         }
 
-        $this->prefixeModel->update($id, ['valeur' => $valeur]);
+        $this->prefixeModel->update($id, [
+            'valeur'                 => $valeur,
+            'est_externe'            => $estExterne,
+            'pourcentage_commission' => $commission,
+        ]);
 
         return redirect()->to('/operateur/prefixes')->with('success', 'Préfixe modifié avec succès.');
     }

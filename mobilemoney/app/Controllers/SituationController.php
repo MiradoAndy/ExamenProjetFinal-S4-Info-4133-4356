@@ -19,9 +19,10 @@ class SituationController extends BaseController
     public function gain(): string
     {
         return view('operateur/situation/gain', [
-            'total_gains'      => $this->historiqueModel->getTotalGains(),
-            'gains_par_type'   => $this->historiqueModel->getGainsParType(),
-            'historique_gains' => $this->historiqueModel->getHistoriqueGains(),
+            'total_gains'       => $this->historiqueModel->getTotalGains(),
+            'total_commissions' => $this->historiqueModel->getTotalCommissions(),
+            'gains_par_type'    => $this->historiqueModel->getGainsParType(),
+            'historique_gains'  => $this->historiqueModel->getHistoriqueGains(),
         ]);
     }
 
@@ -34,5 +35,12 @@ class SituationController extends BaseController
         }
 
         return view('operateur/situation/comptes', ['clients' => $clients]);
+    }
+
+    public function operateurs(): string
+    {
+        return view('operateur/situation/operateurs', [
+            'montants_par_operateur' => $this->historiqueModel->getMontantsParOperateur(),
+        ]);
     }
 }
