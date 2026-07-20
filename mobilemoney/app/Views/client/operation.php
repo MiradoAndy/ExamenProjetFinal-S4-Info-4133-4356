@@ -1,5 +1,4 @@
 <?php
-// Libellés affichés selon le type d'opération demandé (depot, retrait ou transfert).
 $titres = [
     'depot'     => 'Dépôt',
     'retrait'   => 'Retrait',
@@ -11,6 +10,10 @@ $titre = $titres[$type] ?? 'Opération';
 <?= $this->extend('client/layout') ?>
 
 <?= $this->section('contenu') ?>
+
+<a href="/client/dashboard" class="lien-retour">
+    <i class="bi bi-chevron-left"></i> Retour
+</a>
 
 <div class="carte">
     <h2><?= esc($titre) ?></h2>
@@ -41,12 +44,10 @@ $titre = $titres[$type] ?? 'Opération';
             autofocus
         >
 
-        <div style="margin-top: 20px;">
-            <button type="submit">Valider le <?= esc(mb_strtolower($titre)) ?></button>
-        </div>
+        <button type="submit" class="bouton-submit <?= $type === 'transfert' ? 'rose' : '' ?>">
+            Valider le <?= esc(mb_strtolower($titre)) ?>
+        </button>
     <?= form_close() ?>
 </div>
-
-<a class="bouton secondaire" href="/client/dashboard">Retour au tableau de bord</a>
 
 <?= $this->endSection() ?>

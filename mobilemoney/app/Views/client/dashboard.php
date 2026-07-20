@@ -3,22 +3,33 @@
 <?= $this->section('contenu') ?>
 
 <div class="carte">
-    <div>Numéro de compte</div>
-    <strong><?= esc($client['numero']) ?></strong>
+    <div class="label-compte">Numéro de compte</div>
+    <strong style="font-size:1rem;letter-spacing:1px;"><?= esc($client['numero']) ?></strong>
 
-    <div style="margin-top: 16px;">Solde disponible</div>
-    <div class="solde"><?= number_format((float) $client['solde'], 0, ',', ' ') ?> Ar</div>
+    <div class="label-compte" style="margin-top:20px;">Solde disponible</div>
+    <div class="solde"><?= number_format((float) $client['solde'], 0, ',', ' ') ?> <span>Ar</span></div>
 </div>
 
 <div class="carte">
-    <h3 style="margin-top: 0;">Opérations</h3>
+    <h3>Opérations</h3>
     <div class="grille-operations">
-        <a class="bouton" href="/client/operation/depot">Dépôt</a>
-        <a class="bouton" href="/client/operation/retrait">Retrait</a>
-        <a class="bouton" href="/client/operation/transfert">Transfert</a>
+        <a class="bouton" href="/client/operation/depot">
+            <i class="bi bi-arrow-down-circle-fill"></i>
+            Dépôt
+        </a>
+        <a class="bouton" href="/client/operation/retrait">
+            <i class="bi bi-arrow-up-circle-fill"></i>
+            Retrait
+        </a>
+        <a class="bouton secondaire" href="/client/operation/transfert">
+            <i class="bi bi-send-fill"></i>
+            Transfert
+        </a>
     </div>
 </div>
 
-<a class="bouton secondaire" href="/client/historique">Voir l'historique des opérations</a>
+<a class="bouton secondaire" href="/client/historique" style="display:flex;justify-content:center;gap:8px;">
+    <i class="bi bi-clock-history"></i> Voir l'historique
+</a>
 
 <?= $this->endSection() ?>
