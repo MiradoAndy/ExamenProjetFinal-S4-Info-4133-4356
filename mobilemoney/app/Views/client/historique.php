@@ -22,6 +22,7 @@
                         <th>Type</th>
                         <th>Montant</th>
                         <th>Frais</th>
+                        <th>Commission</th>
                         <th>Destinataire</th>
                     </tr>
                 </thead>
@@ -34,6 +35,15 @@
                             </td>
                             <td><?= number_format((float) $operation['montant'], 0, ',', ' ') ?> Ar</td>
                             <td><?= number_format((float) $operation['frais'], 0, ',', ' ') ?> Ar</td>
+                            <td>
+                                <?php if ((float) ($operation['frais_commission'] ?? 0) > 0): ?>
+                                    <span style="color:var(--pink);font-weight:600;">
+                                        <?= number_format((float) $operation['frais_commission'], 0, ',', ' ') ?> Ar
+                                    </span>
+                                <?php else: ?>
+                                    <span style="color:var(--secondary-label);">—</span>
+                                <?php endif; ?>
+                            </td>
                             <td style="color:var(--secondary-label);">
                                 <?= esc($operation['numero_destinataire'] ?? '—') ?>
                             </td>

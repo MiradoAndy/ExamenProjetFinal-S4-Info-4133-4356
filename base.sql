@@ -9,8 +9,10 @@ PRAGMA foreign_keys = ON;
 -- -------------------------------------------
 
 CREATE TABLE IF NOT EXISTS prefixe (
-    id_prefixe  INTEGER PRIMARY KEY AUTOINCREMENT,
-    valeur      TEXT NOT NULL UNIQUE  -- ex: 033, 037
+    id_prefixe              INTEGER PRIMARY KEY AUTOINCREMENT,
+    valeur                  TEXT NOT NULL UNIQUE,  -- ex: 033, 037
+    est_externe             INTEGER NOT NULL DEFAULT 0,  -- 0=notre opérateur, 1=autre opérateur
+    pourcentage_commission  REAL NOT NULL DEFAULT 0      -- % de commission inter-opérateur
 );
 
 CREATE TABLE IF NOT EXISTS client (
@@ -38,6 +40,7 @@ CREATE TABLE IF NOT EXISTS historique_operation (
     type_operation_id   INTEGER NOT NULL,
     montant             REAL NOT NULL,
     frais               REAL NOT NULL DEFAULT 0,
+    frais_commission    REAL NOT NULL DEFAULT 0, -- commission inter-opérateur (reversée à l'autre opérateur)
     client_id           INTEGER NOT NULL,
     date                DATETIME NOT NULL DEFAULT (datetime('now')),
     numero_destinataire TEXT, -- NULL pour depot/retrait, rempli pour transfert
@@ -49,9 +52,9 @@ CREATE TABLE IF NOT EXISTS historique_operation (
 -- DONNÉES INITIALES
 -- -------------------------------------------
 
--- Préfixes valides de l'opérateur
-INSERT INTO prefixe (valeur) VALUES ('033');
-INSERT INTO prefixe (valeur) VALUES ('037');
+-- Préfixes de notre opérateur (est_externe = 0)
+INSERT INTO prefixe (valeur, est_externe, pourcentage_commission) VALUES ('033', 0, 0);
+INSERT INTO prefixe (valeur, est_externe, pourcentage_commission) VALUES ('037', 0, 0);
 
 -- Types d'opérations
 INSERT INTO type_operation (libelle) VALUES ('depot');

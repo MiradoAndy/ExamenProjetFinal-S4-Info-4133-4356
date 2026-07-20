@@ -4,32 +4,18 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-/**
- * Modèle de la table `historique_operation`.
- *
- * Chaque ligne représente une opération (dépôt, retrait ou transfert)
- * effectuée par un client.
- */
 class HistoriqueOperationModel extends Model
 {
     protected $table         = 'historique_operation';
     protected $primaryKey    = 'id_operation';
     protected $returnType    = 'array';
-    protected $allowedFields = ['type_operation_id', 'montant', 'frais', 'client_id', 'numero_destinataire'];
+    protected $allowedFields = ['type_operation_id', 'montant', 'frais', 'frais_commission', 'client_id', 'numero_destinataire'];
 
-    // La colonne `date` n'a pas de valeur par défaut en base : on demande
-    // donc au modèle de la remplir automatiquement à chaque insertion.
     protected $useTimestamps = true;
     protected $dateFormat    = 'datetime';
     protected $createdField  = 'date';
     protected $updatedField  = '';
 
-    /**
-     * Retourne l'historique des opérations d'un client, du plus récent au plus ancien,
-     * avec le libellé du type d'opération (depot, retrait, transfert).
-     *
-     * @return list<array<string, mixed>>
-     */
     public function getHistoriqueParClient(int $idClient): array
     {
         return $this->select('historique_operation.*, type_operation.libelle AS type_libelle')
@@ -40,7 +26,7 @@ class HistoriqueOperationModel extends Model
     }
 
     // ---------------------------------------------------------------
-    // Côté opérateur : gains
+    // Côté opérateur : gains barème (notre revenu propre)
     // ---------------------------------------------------------------
 
     public function getTotalGains(): float
@@ -56,10 +42,23 @@ class HistoriqueOperationModel extends Model
         return (float) ($result->total ?? 0);
     }
 
+    public function getTotalCommissions(): float
+    {
+        $result = $this->db->query("
+            SELECT SUM(frais_commission) as total
+            FROM historique_operation
+        ")->getRow();
+
+        return (float) ($result->total ?? 0);
+    }
+
     public function getGainsParType(): array
     {
         return $this->db->query("
-            SELECT t.libelle, COUNT(*) as nb_operations, SUM(h.frais) as total_frais
+            SELECT t.libelle,
+                   COUNT(*) as nb_operations,
+                   SUM(h.frais) as total_frais,
+                   SUM(h.frais_commission) as total_commission
             FROM historique_operation h
             JOIN type_operation t ON h.type_operation_id = t.id_type_operation
             WHERE t.libelle IN ('retrait', 'transfert')
@@ -70,13 +69,34 @@ class HistoriqueOperationModel extends Model
     public function getHistoriqueGains(): array
     {
         return $this->db->query("
-            SELECT h.id_operation, h.montant, h.frais, h.date, h.numero_destinataire,
-                   t.libelle, c.numero
+            SELECT h.id_operation, h.montant, h.frais, h.frais_commission, h.date,
+                   h.numero_destinataire, t.libelle, c.numero
             FROM historique_operation h
             JOIN type_operation t ON h.type_operation_id = t.id_type_operation
             JOIN client c ON h.client_id = c.id_client
             WHERE t.libelle IN ('retrait', 'transfert')
             ORDER BY h.date DESC
+        ")->getResultArray();
+    }
+
+    // ---------------------------------------------------------------
+    // Côté opérateur : montants à envoyer aux autres opérateurs
+    // ---------------------------------------------------------------
+
+    public function getMontantsParOperateur(): array
+    {
+        return $this->db->query("
+            SELECT p.valeur,
+                   p.pourcentage_commission,
+                   COUNT(*) as nb_transferts,
+                   SUM(h.montant) as total_montant,
+                   SUM(h.frais_commission) as total_commission,
+                   SUM(h.montant + h.frais_commission) as total_a_envoyer
+            FROM historique_operation h
+            JOIN prefixe p ON substr(h.numero_destinataire, 1, 3) = p.valeur
+            WHERE p.est_externe = 1
+            GROUP BY p.id_prefixe, p.valeur, p.pourcentage_commission
+            ORDER BY total_a_envoyer DESC
         ")->getResultArray();
     }
 
