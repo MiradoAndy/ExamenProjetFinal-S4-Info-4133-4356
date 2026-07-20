@@ -339,6 +339,11 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" href="/operateur/situation/operateurs">
+                        <i class="bi bi-diagram-3-fill"></i> Inter-op
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="/operateur/situation/comptes">
                         <i class="bi bi-people-fill"></i> Comptes
                     </a>

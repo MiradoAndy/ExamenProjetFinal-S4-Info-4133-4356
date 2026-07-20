@@ -33,6 +33,6 @@ class PrefixeValidator
 
         $prefixe = substr($numero, 0, self::LONGUEUR_PREFIXE);
 
-        return $this->prefixeModel->where('valeur', $prefixe)->first() !== null;
+        return $this->prefixeModel->where('valeur', $prefixe)->where('est_externe', 0)->first() !== null;
     }
 }
