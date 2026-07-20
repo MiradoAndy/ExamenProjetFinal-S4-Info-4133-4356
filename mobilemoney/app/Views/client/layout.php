@@ -11,10 +11,11 @@
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
         :root {
-            --teal:   #069494;
-            --pink:   #FF69B4;
-            --cyan:   #00F0FF;
-            --bg:     #F2F2F7;
+            --navy:   #103173;
+            --pink:   #F26D9E;
+            --yellow: #F2B705;
+            --orange: #F27507;
+            --lpink:  #F2B3CA;
             --surface:#FFFFFF;
             --label:  #1C1C1E;
             --secondary-label: #6E6E73;
@@ -23,7 +24,7 @@
 
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: var(--bg);
+            background-color: #FFFFFF;
             color: var(--label);
             min-height: 100vh;
             -webkit-font-smoothing: antialiased;
@@ -31,7 +32,7 @@
 
         /* ── HEADER ─────────────────────────────── */
         header {
-            background: var(--teal);
+            background: var(--navy);
             border-bottom: 5px solid var(--pink);
             position: sticky;
             top: 0;
@@ -55,7 +56,7 @@
             gap: 7px;
             text-decoration: none;
         }
-        .brand i { font-size: 1.1rem; color: var(--cyan); }
+        .brand i { font-size: 1.1rem; color: var(--yellow); }
 
         nav { display: flex; gap: 4px; }
         nav a {
@@ -75,6 +76,8 @@
 
         /* ── MAIN ───────────────────────────────── */
         main {
+            position: relative;
+            z-index: 1;
             max-width: 560px;
             margin: 0 auto;
             padding: 28px 20px 72px;
@@ -91,16 +94,16 @@
             align-items: center;
             gap: 10px;
         }
-        .message.erreur  { background: var(--pink);  color: #fff; }
-        .message.succes  { background: var(--cyan);  color: #005050; }
+        .message.erreur  { background: var(--pink);   color: #fff; }
+        .message.succes  { background: var(--yellow);  color: var(--navy); }
 
         /* ── CARTE ──────────────────────────────── */
         .carte {
-            background: var(--surface);
+            background: rgba(255,255,255,0.96);
             border-radius: 20px;
             padding: 24px;
             margin-bottom: 16px;
-            box-shadow: 0 2px 16px rgba(0,0,0,0.07);
+            box-shadow: 0 4px 24px rgba(16,49,115,0.15);
         }
 
         .carte h2 {
@@ -129,7 +132,7 @@
         .solde {
             font-size: 3rem;
             font-weight: 700;
-            color: var(--teal);
+            color: var(--navy);
             letter-spacing: -2px;
             line-height: 1;
             margin-top: 4px;
@@ -151,7 +154,7 @@
             justify-content: center;
             gap: 6px;
             padding: 16px 10px;
-            background: var(--teal);
+            background: var(--navy);
             color: #fff;
             border-radius: 16px;
             text-decoration: none;
@@ -160,20 +163,20 @@
             text-align: center;
             cursor: pointer;
             transition: opacity 0.2s, transform 0.15s;
-            box-shadow: 0 2px 10px rgba(6,148,148,0.25);
+            box-shadow: 0 2px 10px rgba(16,49,115,0.25);
         }
         .bouton i { font-size: 1.4rem; }
         .bouton:hover { opacity: 0.85; transform: scale(1.03); color: #fff; }
 
         .bouton.secondaire {
             background: var(--pink);
-            box-shadow: 0 2px 10px rgba(255,105,180,0.25);
+            box-shadow: 0 2px 10px rgba(242,109,158,0.25);
         }
 
         .bouton-submit {
             width: 100%;
             padding: 15px;
-            background: var(--teal);
+            background: var(--navy);
             color: #fff;
             border: none;
             border-radius: 14px;
@@ -183,10 +186,10 @@
             cursor: pointer;
             margin-top: 20px;
             transition: opacity 0.2s, transform 0.15s;
-            box-shadow: 0 2px 12px rgba(6,148,148,0.3);
+            box-shadow: 0 2px 12px rgba(16,49,115,0.3);
         }
         .bouton-submit:hover { opacity: 0.88; transform: translateY(-1px); }
-        .bouton-submit.rose { background: var(--pink); box-shadow: 0 2px 12px rgba(255,105,180,0.3); }
+        .bouton-submit.rose { background: var(--pink); box-shadow: 0 2px 12px rgba(242,109,158,0.3); }
 
         /* ── LABELS & INPUTS ─────────────────────── */
         label {
@@ -206,20 +209,19 @@
             font-size: 0.95rem;
             font-weight: 400;
             outline: none;
-            background: var(--bg);
+            background: #fff;
             color: var(--label);
             transition: border-color 0.2s, box-shadow 0.2s;
         }
         input:focus {
-            border-color: var(--teal);
-            box-shadow: 0 0 0 3px rgba(6,148,148,0.15);
-            background: #fff;
+            border-color: var(--navy);
+            box-shadow: 0 0 0 3px rgba(16,49,115,0.15);
         }
 
         /* ── TABLE ───────────────────────────────── */
         table { width: 100%; border-collapse: collapse; }
         th {
-            background: var(--teal);
+            background: var(--navy);
             color: #fff;
             padding: 10px 14px;
             text-align: left;
@@ -233,24 +235,27 @@
             border-top: 1px solid var(--separator);
             font-size: 0.9rem;
         }
-        tr:hover td { background: rgba(6,148,148,0.04); }
+        tr:hover td { background: rgba(16,49,115,0.04); }
 
-        .type-depot     { color: var(--teal); font-weight: 600; }
-        .type-retrait   { color: var(--pink); font-weight: 600; }
-        .type-transfert { color: #00909a;     font-weight: 600; }
+        .type-depot     { color: var(--navy);   font-weight: 600; }
+        .type-retrait   { color: var(--orange);  font-weight: 600; }
+        .type-transfert { color: var(--pink);    font-weight: 600; }
 
         /* ── RETOUR ──────────────────────────────── */
         .lien-retour {
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            color: var(--teal);
+            color: var(--navy);
             font-weight: 600;
             font-size: 0.87rem;
             text-decoration: none;
             margin-bottom: 16px;
+            background: rgba(255,255,255,0.8);
+            padding: 6px 14px;
+            border-radius: 20px;
         }
-        .lien-retour:hover { opacity: 0.75; }
+        .lien-retour:hover { background: rgba(255,255,255,0.95); color: var(--navy); }
     </style>
 </head>
 <body>
