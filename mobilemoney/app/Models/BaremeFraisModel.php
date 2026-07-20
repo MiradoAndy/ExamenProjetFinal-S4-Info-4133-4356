@@ -33,4 +33,14 @@ class BaremeFraisModel extends Model
 
         return $bareme !== null ? (float) $bareme['frais'] : null;
     }
+
+    public function getAllAvecType(): array
+    {
+        return $this->db->query("
+            SELECT b.*, t.libelle
+            FROM bareme_frais b
+            JOIN type_operation t ON b.type_operation_id = t.id_type_operation
+            ORDER BY t.libelle, b.montant_min ASC
+        ")->getResultArray();
+    }
 }
