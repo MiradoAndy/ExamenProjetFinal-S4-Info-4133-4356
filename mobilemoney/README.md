@@ -88,3 +88,11 @@ git tag v1
 git push origin v1 
 
 de zay ny tag v1 (ohatra)
+
+
+
+# 1. Créer toutes les tables
+php spark migrate
+
+# 2. Insérer les données initiales
+php spark db:seed DatabaseSeeder
