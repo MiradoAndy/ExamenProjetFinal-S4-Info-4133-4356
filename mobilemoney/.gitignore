@@ -84,10 +84,6 @@ php_errors.log
 #-------------------------
 # Composer
 #-------------------------
-# Le dossier vendor/ n'est pas versionné (trop lourd, généré automatiquement).
-# Après avoir cloné le projet, exécutez : composer install
-# Cela régénérera vendor/ à partir de composer.lock (versions exactes garanties).
-vendor/
 
 #-------------------------
 # IDE / Development Files

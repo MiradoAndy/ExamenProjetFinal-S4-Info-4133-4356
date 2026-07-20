@@ -62,8 +62,8 @@ Operateur de mobile money
                                         [x] -fonction qui retourne l'historique des opérations du client (AINA)
                         
 []-V2
-        [] -Coté opérateur
-                [] -Configuration des préfixes valable pour les autres opérateurs
+        [] -Coté opérateur (MIRADO)
+                [] -Configuration des préfixes valable pour les autres opérateurs (MIRADO)
                         [] -un formulaire de saisie des préfixes (MIRADO)
                         [] -validation des préfixes (MIRADO)
                         [] -inclure une nouvelle table pour les préfixes des autres opérateurs (MIRADO)
@@ -72,22 +72,22 @@ Operateur de mobile money
                         [] -un formulaire de saisie du % en plus de commissions (MIRADO)
                                 [] -dropdown pour choisir si la valeur choisie est un pourcentage ou un montant fixe (MIRADO)
                         [] -validation du % en plus de commissions (MIRADO)
-                [] -Situation gain via les différents frais
-                        [] -séparer les gains obtenu de l'operateur des gains des autres operateurs
-                [] -Situation des montants à envoyer à chaque opérateur
-                        [] -front
+                [] -Situation gain via les différents frais (MIRADO)
+                        [] -séparer les gains obtenu de l'operateur des gains des autres operateurs (MIRADO)
+                [] -Situation des montants à envoyer à chaque opérateur (MIRADO)
+                        [] -front (MIRADO)
                                 [] -dashboard affichant le montant total à envoyer à chaque opérateur (MIRADO)
-                        [] -back
+                        [] -back (MIRADO)
                                 [] -fonction qui retourne le montant total à envoyer à chaque opérateur (MIRADO)
-        [] -Coté client
-                [] -option inclure frais de retrait lors de l'envoi
-                        [] -front
+        [] -Coté client (AINA)
+                [] -option inclure frais de retrait lors de l'envoi (AINA)
+                        [] -front (AINA)
                                 [] -checkbox pour inclure les frais de retrait lors de l'envoi (AINA)
-                        [] -back
+                        [] -back (AINA)
                                 [] -si inclu: l'expediteur paie montant + frais de transfert + frais de retrait (AINA)
                                 [] -si pas inclu: le destinataire paie montant + frais de retrait (AINA)
-                [] -envoie multiple vers plusieurs numero
-                        [] -front
+                [] -envoie multiple vers plusieurs numero (AINA)
+                        [] -front (AINA)
                                 [] -bouton plus pour plusieurs champs de saisie de numero (AINA)
-                        [] -back
+                        [] -back (AINA)
                                 [] -division equite du montant à envoyer entre les différents destinataires (AINA)
