@@ -139,16 +139,9 @@ class OperationService
             return $this->echec('Solde insuffisant pour effectuer ce transfert.');
         }
 
-        // Pas d'inscription préalable : si le destinataire n'existe pas encore,
-        // vérifier au moins que son préfixe est valable avant de créer son compte.
         $destinataire = $this->clientModel->findByNumero($numeroDestinataire);
         if ($destinataire === null) {
-            if (! (new PrefixeValidator())->estValide($numeroDestinataire)) {
-                return $this->echec('Le numéro du destinataire est invalide.');
-            }
-
-            $idDestinataire = $this->clientModel->insert(['numero' => $numeroDestinataire, 'solde' => 0], true);
-            $destinataire   = $this->clientModel->find($idDestinataire);
+            return $this->echec('Ce numéro n\'existe pas. Le transfert est impossible vers un compte inexistant.');
         }
 
         $this->clientModel->update($client['id_client'], ['solde' => $client['solde'] - $montantTotal]);
