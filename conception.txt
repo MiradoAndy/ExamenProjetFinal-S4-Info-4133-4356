@@ -1,0 +1,29 @@
+client : 
+    - id_client
+    - numero
+    - id_prefixe
+    - solde
+
+prefixe :
+    - id_prefixe
+    - valeur
+
+type_operation :
+    - id_type_operation
+    - libelle (retrait , transfert , depot)
+
+bareme_frais : 
+    - id_bareme_frais
+    - type_operation_id
+    - montant_min
+    - montant_max
+    - frais 
+
+historique_operation : 
+    - id_operation 
+    - type_operation_id
+    - montant 
+    - frais
+    - client_id
+    - date
+    - numero_destinataire
