@@ -23,8 +23,9 @@ $routes->get('operateur/baremes/edit/(:num)',    'BaremeController::edit/$1');
 $routes->post('operateur/baremes/update/(:num)', 'BaremeController::update/$1');
 $routes->get('operateur/baremes/delete/(:num)',  'BaremeController::delete/$1');
 
-$routes->get('operateur/situation/gain',    'SituationController::gain');
-$routes->get('operateur/situation/comptes', 'SituationController::comptes');
+$routes->get('operateur/situation/gain',       'SituationController::gain');
+$routes->get('operateur/situation/comptes',    'SituationController::comptes');
+$routes->get('operateur/situation/operateurs', 'SituationController::operateurs');
 
 // -------------------------------------------------------------------------
 // Côté client
