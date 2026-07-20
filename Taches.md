@@ -37,25 +37,25 @@ Operateur de mobile money
                                 [] -fonction qui retourne les infos du client (MIRADO)
                                 [] -fonction qui retourne les transactions du client (MIRADO)
 
-        [] -Coté client
-                [] -login (AINA)
-                        [] -front
-                                [] -formulaire de login (AINA)
-                        [] -back
-                                [] -fonction de verification du numero (verification du prefixe pour l'instant) (AINA)
-                [] -operations
-                        [] -Voir le solde du compte (AINA)
-                                [] -front
-                                        [] -dashboard affichant le solde du compte (AINA)
-                                [] -back
-                                        [] -fonction qui retourne le solde du compte (AINA)
-                        [] -Faire un depôt, retrait, transfert (AINA)
-                                [] -front
-                                        [] -formulaire de saisie des informations de l'opération (AINA)
-                                [] -back
-                                        [] -fonction qui effectue l'opération et retourne le resultat (succès ou échec) (AINA)
-                        [] -Voir les historiques (AINA)
-                                [] -front
-                                        [] -tableau affichant les historiques des opérations (AINA)
-                                [] -back
-                                        [] -fonction qui retourne l'historique des opérations du client (AINA)
+        [x] -Coté client
+                [x] -login (AINA)
+                        [x] -front
+                                [x] -formulaire de login (AINA)
+                        [x] -back
+                                [x] -fonction de verification du numero (verification du prefixe pour l'instant) (AINA)
+                [x] -operations
+                        [x] -Voir le solde du compte (AINA)
+                                [x] -front
+                                        [x] -dashboard affichant le solde du compte (AINA)
+                                [x] -back
+                                        [x] -fonction qui retourne le solde du compte (AINA)
+                        [x] -Faire un depôt, retrait, transfert (AINA)
+                                [x] -front
+                                        [x] -formulaire de saisie des informations de l'opération (AINA)
+                                [x] -back
+                                        [x] -fonction qui effectue l'opération et retourne le resultat (succès ou échec) (AINA)
+                        [x] -Voir les historiques (AINA)
+                                [x] -front
+                                        [x] -tableau affichant les historiques des opérations (AINA)
+                                [x] -back
+                                        [x] -fonction qui retourne l'historique des opérations du client (AINA)

@@ -28,6 +28,12 @@ abstract class BaseController extends Controller
     // protected $session;
 
     /**
+     * Helpers chargés automatiquement pour tous les contrôleurs de l'application.
+     * 'form' et 'url' sont utilisés dans les vues du côté client (formulaires, liens).
+     */
+    protected $helpers = ['form', 'url'];
+
+    /**
      * @return void
      */
     public function initController(RequestInterface $request, ResponseInterface $response, LoggerInterface $logger)
