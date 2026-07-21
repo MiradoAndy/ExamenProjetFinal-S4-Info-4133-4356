@@ -84,8 +84,8 @@ Additionally, make sure that the following extensions are enabled in your PHP:
 
 
 Refa avy mimerge ao am main de manao :
-git tag v1
-git push origin v1 
+git tag v2
+git push origin v2
 
 de zay ny tag v1 (ohatra)
 

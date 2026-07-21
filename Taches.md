@@ -91,3 +91,8 @@ Operateur de mobile money
                                 [x] -bouton plus pour plusieurs champs de saisie de numero (AINA)
                         [x] -back (AINA)
                                 [x] -division equite du montant à envoyer entre les différents destinataires (AINA)
+
+        -promotion en pourcentage sur les frais de transfert de même operateur
+                -back
+                        -fonction qui verifie si le destinataire et l'envoyeur sont du même operateur
+                

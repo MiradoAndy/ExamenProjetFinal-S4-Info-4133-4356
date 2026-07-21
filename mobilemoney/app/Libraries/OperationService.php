@@ -118,6 +118,7 @@ class OperationService
             return $this->echec('Le numéro du destinataire est obligatoire.');
         }
 
+        
         $nbDest         = count($numerosDestinataires);
         $montantParDest = $montant / $nbDest;
 
@@ -144,20 +145,28 @@ class OperationService
             if ($estExterne) {
                 $pct             = $this->prefixeModel->getCommissionPourNumero($numero);
                 $fraisCommission = $montantParDest * $pct / 100;
-            } else {
-                $destinataire = $this->clientModel->findByNumero($numero);
-                if ($destinataire === null) {
-                    return $this->echec("Le numéro $numero n'existe pas dans notre réseau.");
-                }
-            }
+                } else {
+                    $destinataire = $this->clientModel->findByNumero($numero);
+                    if ($destinataire === null) {
+                        return $this->echec("Le numéro $numero n'existe pas dans notre réseau.");
+                        }
+                        }
+                        
+                        $fraisRetrait = 0.0;
+                        if ($inclusFraisRetrait && $typeRetrait !== null) {
+                            $fr           = $this->baremeFraisModel->getFrais((int) $typeRetrait['id_type_operation'], $montantParDest);
+                            $fraisRetrait = $fr ?? 0.0;
+                            }
+                            $prefixe = new PrefixeValidator();
+                            foreach($numerosDestinataires as $key => $numero){
+                                $est_valide = $prefixe->estValide($numero);
+                                if($est_valide){
+                                    $totalDebit += $montantParDest + ($fraisTransfert * 50 / 100) + $fraisCommission + $fraisRetrait;
+                                } else {
+                                    $totalDebit += $montantParDest + $fraisTransfert + $fraisCommission + $fraisRetrait;
+                                }
+                            }
 
-            $fraisRetrait = 0.0;
-            if ($inclusFraisRetrait && $typeRetrait !== null) {
-                $fr           = $this->baremeFraisModel->getFrais((int) $typeRetrait['id_type_operation'], $montantParDest);
-                $fraisRetrait = $fr ?? 0.0;
-            }
-
-            $totalDebit += $montantParDest + $fraisTransfert + $fraisCommission + $fraisRetrait;
 
             $operations[] = [
                 'numero'           => $numero,
