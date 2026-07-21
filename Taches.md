@@ -96,3 +96,13 @@ Operateur de mobile money
                 -back
                         -fonction qui verifie si le destinataire et l'envoyeur sont du même operateur
                 
+
+        epargne
+        client -> % epargne
+        refa misy trasfert tonga any aminy , le % tiany epargnena lasa any amle epargne
+
+        todo :
+        - manampy colonne % epargne sy solde_epargne client (am table client) []
+        - manao page insert % epargne par client []
+        - refa manao transfert ny olona ray de ny % aniny alaina anaty epargne de ny ambiny anaty solde tsotra []
+        

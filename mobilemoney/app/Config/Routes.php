@@ -41,5 +41,8 @@ $routes->group('client', ['filter' => 'clientAuth'], static function (RouteColle
     $routes->get('operation/(:segment)',  'Client\OperationController::form/$1');
     $routes->post('operation/(:segment)', 'Client\OperationController::process/$1');
 
+    $routes->get('epargne',  'Client\EpargneController::index');
+    $routes->post('epargne', 'Client\EpargneController::valider');
+
     $routes->get('historique', 'Client\HistoriqueController::index');
 });

@@ -9,9 +9,11 @@ class CreateClientTable extends Migration
     public function up()
     {
         $this->forge->addField([
-            'id_client' => ['type' => 'INTEGER', 'auto_increment' => true],
-            'numero'    => ['type' => 'VARCHAR', 'constraint' => 20, 'unique' => true],
-            'solde'     => ['type' => 'REAL', 'default' => 0],
+            'id_client'             => ['type' => 'INTEGER', 'auto_increment' => true],
+            'numero'                => ['type' => 'VARCHAR', 'constraint' => 20, 'unique' => true],
+            'solde'                 => ['type' => 'REAL', 'default' => 0],
+            'pourcentage_epargne'   => ['type' => 'INTEGER', 'default' => 0],
+            'solde_epargne'         => ['type' => 'REAL','default' => 0 ],
         ]);
         $this->forge->addPrimaryKey('id_client');
         $this->forge->createTable('client');

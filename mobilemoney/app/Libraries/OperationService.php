@@ -31,7 +31,7 @@ class OperationService
     }
 
     /**
-     * @param array<string> $numerosDestinataires  Un ou plusieurs numéros pour un transfert.
+     * @param array<string> $numerosDestinataires
      * @return array{success: bool, message: string}
      */
     public function effectuer(
@@ -118,15 +118,13 @@ class OperationService
             return $this->echec('Le numéro du destinataire est obligatoire.');
         }
 
-        
         $nbDest         = count($numerosDestinataires);
         $montantParDest = $montant / $nbDest;
-
-        $typeRetrait = $this->typeOperationModel->findByLibelle('retrait');
+        $typeRetrait    = $this->typeOperationModel->findByLibelle('retrait');
 
         // 1. Pré-calcul et validation de chaque destinataire
         $operations = [];
-        $totalDebit  = 0.0;
+        $totalDebit = 0.0;
 
         foreach ($numerosDestinataires as $numero) {
             if ($numero === $client['numero']) {
@@ -145,28 +143,20 @@ class OperationService
             if ($estExterne) {
                 $pct             = $this->prefixeModel->getCommissionPourNumero($numero);
                 $fraisCommission = $montantParDest * $pct / 100;
-                } else {
-                    $destinataire = $this->clientModel->findByNumero($numero);
-                    if ($destinataire === null) {
-                        return $this->echec("Le numéro $numero n'existe pas dans notre réseau.");
-                        }
-                        }
-                        
-                        $fraisRetrait = 0.0;
-                        if ($inclusFraisRetrait && $typeRetrait !== null) {
-                            $fr           = $this->baremeFraisModel->getFrais((int) $typeRetrait['id_type_operation'], $montantParDest);
-                            $fraisRetrait = $fr ?? 0.0;
-                            }
-                            $prefixe = new PrefixeValidator();
-                            foreach($numerosDestinataires as $key => $numero){
-                                $est_valide = $prefixe->estValide($numero);
-                                if($est_valide){
-                                    $totalDebit += $montantParDest + ($fraisTransfert * 50 / 100) + $fraisCommission + $fraisRetrait;
-                                } else {
-                                    $totalDebit += $montantParDest + $fraisTransfert + $fraisCommission + $fraisRetrait;
-                                }
-                            }
+            } else {
+                $destinataire = $this->clientModel->findByNumero($numero);
+                if ($destinataire === null) {
+                    return $this->echec("Le numéro $numero n'existe pas dans notre réseau.");
+                }
+            }
 
+            $fraisRetrait = 0.0;
+            if ($inclusFraisRetrait && $typeRetrait !== null) {
+                $fr           = $this->baremeFraisModel->getFrais((int) $typeRetrait['id_type_operation'], $montantParDest);
+                $fraisRetrait = $fr ?? 0.0;
+            }
+
+            $totalDebit += $montantParDest + $fraisTransfert + $fraisCommission + $fraisRetrait;
 
             $operations[] = [
                 'numero'           => $numero,
@@ -191,8 +181,14 @@ class OperationService
 
         foreach ($operations as $op) {
             if (!$op['estExterne'] && $op['destinataire'] !== null) {
+                $montantRecu    = $op['montant'] + $op['frais_retrait'];
+                $pctEpargne     = (float) ($op['destinataire']['pourcentage_epargne'] ?? 0);
+                $partEpargne    = round($montantRecu * $pctEpargne / 100);
+                $partSolde      = $montantRecu - $partEpargne;
+
                 $this->clientModel->update($op['destinataire']['id_client'], [
-                    'solde' => $op['destinataire']['solde'] + $op['montant'] + $op['frais_retrait'],
+                    'solde'         => (float) $op['destinataire']['solde'] + $partSolde,
+                    'solde_epargne' => (float) ($op['destinataire']['solde_epargne'] ?? 0) + $partEpargne,
                 ]);
             }
 

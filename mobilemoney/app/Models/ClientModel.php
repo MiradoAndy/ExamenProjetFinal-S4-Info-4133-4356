@@ -13,7 +13,7 @@ class ClientModel extends Model
     protected $primaryKey    = 'id_client';
     protected $returnType    = 'array';
     protected $useTimestamps = false;
-    protected $allowedFields = ['numero', 'solde'];
+    protected $allowedFields = ['numero', 'solde', 'pourcentage_epargne', 'solde_epargne'];
 
     /**
      * Recherche un client à partir de son numéro de téléphone.

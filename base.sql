@@ -18,7 +18,9 @@ CREATE TABLE IF NOT EXISTS prefixe (
 CREATE TABLE IF NOT EXISTS client (
     id_client   INTEGER PRIMARY KEY AUTOINCREMENT,
     numero      TEXT NOT NULL UNIQUE, -- ex: 0331234567
-    solde       REAL NOT NULL DEFAULT 0
+    solde       REAL NOT NULL DEFAULT 0,
+    pourcentage_epargne INTEGER DEFAULT 0,
+    solde_epargne REAL DEFAULT 0
 );
 
 CREATE TABLE IF NOT EXISTS type_operation (

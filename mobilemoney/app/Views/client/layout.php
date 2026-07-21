@@ -268,6 +268,7 @@
                 <nav>
                     <a href="/client/dashboard"><i class="bi bi-wallet2"></i> Solde</a>
                     <a href="/client/historique"><i class="bi bi-clock-history"></i> Historique</a>
+                    <a href="/client/epargne"><i class="bi bi-piggy-bank-fill"></i> Épargne</a>
                     <a href="/logout" class="nav-exit"><i class="bi bi-arrow-right-square"></i> Quitter</a>
                 </nav>
             <?php endif; ?>
